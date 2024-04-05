@@ -1,0 +1,44 @@
+Based on the structure and rules provided earlier, here is the expected Lex output for the given Pascal code, taking into account that comments are ignored, line and character counts are updated appropriately, and identifiers, reserved words, symbols, and integers are recognized according to the patterns you've defined:
+
+```plaintext
+(* comment 1
+   comment 2 *)
+program test;
+var
+  i : integer;
+begin
+  read(i);
+end;
+```
+
+### OUTPUT:
+
+- **Comments**: The multiline comment at the beginning is ignored by the Lex scanner, so it does not produce any output. However, it's important to note that `lineCount` would be incremented for each newline character found within the comment.
+
+- **Line 3**: After the comment, the actual code starts with the program declaration.
+  - `Line: 3, 1st char: 1, “program” is a “reserved word”.`
+  - `Line: 3, 1st char: 9, “test” is an “ID”.`
+  - `Line: 3, 1st char: 13, “;” is a “symbol”.`
+
+- **Line 4**: Variable declaration begins.
+  - `Line: 4, 1st char: 1, “var” is a “reserved word”.`
+
+- **Line 5**: A variable of type integer is declared.
+  - `Line: 5, 1st char: 3, “i” is an “ID”.`
+  - `Line: 5, 1st char: 5, “:” is a “symbol”.`
+  - `Line: 5, 1st char: 7, “integer” is a “reserved word”.`
+  - `Line: 5, 1st char: 14, “;” is a “symbol”.`
+
+- **Line 6**: Marks the beginning of the program's main block.
+  - `Line: 6, 1st char: 1, “begin” is a “reserved word”.`
+
+- **Line 7**: A read operation is performed on the integer variable `i`.
+  - `Line: 7, 1st char: 3, “read” is an “ID”.` (Depending on your specific Lex configuration for handling standard functions or reserved words, "read" could be identified differently.)
+  - `Line: 7, 1st char: 7, “(” is a “symbol”.`
+  - `Line: 7, 1st char: 8, “i” is an “ID”.`
+  - `Line: 7, 1st char: 9, “)” is a “symbol”.`
+  - `Line: 7, 1st char: 10, “;” is a “symbol”.`
+
+- **Line 8**: Marks the end of the program's main block.
+  - `Line: 8, 1st char: 1, “end” is a “reserved word”.`
+  - `Line: 8, 1st char: 4, “;” is a “symbol”.`

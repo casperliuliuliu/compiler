@@ -1,0 +1,45 @@
+OUTPUT:
+Comments ((* a**b) *)): This comment is ignored by the Lex scanner, so it does not produce any output, but it's important to note that if the Lex scanner is set up to increment lineCount for each new line, this multiline comment might affect the line count.
+
+Line 2: Program declaration begins.
+
+Line: 2, 1st char: 1, “program” is a “reserved word”.
+Line: 2, 1st char: 9, “test” is an “ID”.
+Line: 2, 1st char: 13, “;” is a “symbol”.
+Line 3: Starts the variable declaration section.
+
+Line: 3, 1st char: 1, “var” is a “reserved word”.
+Line 4: An integer variable i is declared.
+
+Line: 4, 1st char: 3, “i” is an “ID”.
+Line: 4, 1st char: 5, “:” is a “symbol”.
+Line: 4, 1st char: 7, “integer” is a “reserved word”.
+Line: 4, 1st char: 14, “;” is a “symbol”.
+Line 5: String variables _s, _s2, _s3, _s4, _s5 are declared.
+
+Line: 5, 1st char: 3, “_s, _s2, _s3, _s4, _s5” are “IDs”.
+Line: 5, 1st char: 24, “:” is a “symbol”.
+Line: 5, 1st char: 26, “string” is a “reserved word”.
+Line: 5, 1st char: 32, “;” is a “symbol”.
+Line 6: Marks the beginning of the program's main block.
+
+Line: 6, 1st char: 1, “begin” is a “reserved word”.
+Line 7: The i variable is assigned a negative integer value.
+
+Line: 7, 1st char: 3, “i” is an “ID”.
+Line: 7, 1st char: 5, “:=” is a “symbol”.
+Line: 7, 1st char: 8, “-100” is an “integer”.
+Line: 7, 1st char: 12, “;” is a “symbol”.
+Lines 8-12: String variables are assigned various string values, including empty and single space strings, and strings with escaped single quotes.
+
+Line: 8, 1st char: 3, “_s” is an “ID”. and so on for _s2, _s3, _s4, _s5 with their respective strings:
+'db lab'
+'You''ll see' (Note: This is how you represent a string with an apostrophe in Pascal by doubling the single quote.)
+'' (empty string)
+'''' (string containing a single quote)
+' ' (string containing a space)
+Each assignment is followed by a ; symbol.
+Line 13: Marks the end of the program's main block.
+
+Line: 13, 1st char: 1, “end” is a “reserved word”.
+Line: 13, 1st char: 4, “;” is a “symbol”.

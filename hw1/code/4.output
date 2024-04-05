@@ -1,0 +1,28 @@
+OUTPUT:
+Line 1: This line declares the program name with program being a reserved word, test as the program's identifier, followed by a semicolon symbol.
+
+Line: 1, 1st char: 1, “program” is a “reserved word”.
+Line: 1, 1st char: 9, “test” is an “ID”.
+Line: 1, 1st char: 13, “;” is a “symbol”.
+Line 2: Starts the variable declaration section.
+
+Line: 2, 1st char: 1, “var” is a “reserved word”.
+Line 3: A variable f of type float is declared.
+
+Line: 3, 1st char: 3, “f” is an “ID”.
+Line: 3, 1st char: 5, “:” is a “symbol”.
+Line: 3, 1st char: 7, “float” is a “reserved word”.
+Line: 3, 1st char: 12, “;” is a “symbol”.
+Line 4: Marks the beginning of the program body.
+
+Line: 4, 1st char: 1, “begin” is a “reserved word”.
+Line 5: The f variable is assigned a real number in scientific notation.
+
+Line: 5, 1st char: 3, “f” is an “ID”.
+Line: 5, 1st char: 5, “:=” is a “symbol”.
+Line: 5, 1st char: 8, “12.25e+6” is a “real number”.
+Line: 5, 1st char: 15, “;” is a “symbol”.
+Line 6: Marks the end of the program body.
+
+Line: 6, 1st char: 1, “end” is a “reserved word”.
+Line: 6, 1st char: 4, “;” is a “symbol”.

@@ -607,11 +607,10 @@ char *yytext;
 #line 2 "B093040051.l"
 #include<stdio.h>
 unsigned charCount = 0,lineCount = 0;
-void print_char();
+void output_result(const char* code_type);
+#line 612 "lex.yy.c"
 
-#line 613 "lex.yy.c"
-
-#line 615 "lex.yy.c"
+#line 614 "lex.yy.c"
 
 #define INITIAL 0
 #define COMMENT 1
@@ -829,9 +828,9 @@ YY_DECL
 		}
 
 	{
-#line 21 "B093040051.l"
+#line 20 "B093040051.l"
 
-#line 835 "lex.yy.c"
+#line 834 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -890,39 +889,39 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 22 "B093040051.l"
+#line 21 "B093040051.l"
 { BEGIN(COMMENT); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 23 "B093040051.l"
+#line 22 "B093040051.l"
 { BEGIN(INITIAL); }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 24 "B093040051.l"
+#line 23 "B093040051.l"
 { /* Ignore everything within comments */ }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 25 "B093040051.l"
-{printf("reserved_words : \'%s\'\n", yytext);}
+{output_result("reserved word");charCount += yyleng;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 26 "B093040051.l"
-{printf("identifiers : \'%s\'\n", yytext);}
+{charCount += yyleng;printf("identifiers : \'%s\'\n", yytext);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 27 "B093040051.l"
-{printf("symbols : \'%s\'\n", yytext);}
+{charCount += yyleng;printf("symbols : \'%s\'\n", yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 28 "B093040051.l"
-{printf("real_num : \'%s\'\n", yytext);}
+{charCount += yyleng;printf("real_num : \'%s\'\n", yytext);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
@@ -932,25 +931,25 @@ YY_RULE_SETUP
 case 9:
 YY_RULE_SETUP
 #line 31 "B093040051.l"
-{}
+{charCount += yyleng;}
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
 #line 32 "B093040051.l"
-{lineCount++;}
+{lineCount++;charCount=0;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 33 "B093040051.l"
-{}
+{charCount += yyleng;printf("Other : \'%s\'\n", yytext);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 34 "B093040051.l"
 ECHO;
 	YY_BREAK
-#line 954 "lex.yy.c"
+#line 953 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(COMMENT):
 	yyterminate();
@@ -1966,8 +1965,14 @@ int main()
 	printf("The number of lines: %d\n", lineCount);
 	return 0;
 }
-
-void print_char()
+/*
+void output_result(const char* code_type)
 {
-	printf("[In print_char]Symbol:\'%s\'\n",yytext);charCount++;
+	printf("Line: %d, 1st char: %d, \"%s\" is a \"%s\".\n",lineCount+1, charCount+1, yytext, code_type);
+}
+*/
+
+void output_result(const char* code_type)
+{
+	printf("%s : \"%s\"\n",code_type, yytext);
 }

@@ -1,8 +1,7 @@
 %{
 #include<stdio.h>
 unsigned charCount = 0,lineCount = 0;
-void print_char();
-
+void output_result(const char* code_type);
 %}
 
 
@@ -15,7 +14,7 @@ quoted_string \'([^\']|\'\'){0,28}\'
 String 	[a-zA-Z]+
 space [ ]
 eol \n
-Symbol   .
+Other   .
 
 %x COMMENT
 %%
@@ -23,26 +22,33 @@ Symbol   .
 <COMMENT>"*)"               { BEGIN(INITIAL); }
 <COMMENT>.|\n               { /* Ignore everything within comments */ }
 
-{reserved_words}    {printf("reserved_words : \'%s\'\n", yytext);}
-{identifiers}   {printf("identifiers : \'%s\'\n", yytext);}
-{symbols}   {printf("symbols : \'%s\'\n", yytext);}
-{real_num}   {printf("real_num : \'%s\'\n", yytext);}
+{reserved_words}    {output_result("reserved word");charCount += yyleng;}
+{identifiers}   {charCount += yyleng;printf("identifiers : \'%s\'\n", yytext);}
+{symbols}   {charCount += yyleng;printf("symbols : \'%s\'\n", yytext);}
+{real_num}   {charCount += yyleng;printf("real_num : \'%s\'\n", yytext);}
 
 {String}	{charCount += yyleng; printf("String : \'%s\'\n", yytext);}
-{space} {}
-{eol}   {lineCount++;}
-{Symbol} {}
+{space} {charCount += yyleng;}
+{eol}   {lineCount++;charCount=0;}
+{Other} {charCount += yyleng;printf("Other : \'%s\'\n", yytext);}
 %%
 
 int main()
 {
 	yylex(); 	
-	printf("\n\nThe number of characters: %d\n",charCount);
-	printf("The number of lines: %d\n", lineCount);
 	return 0;
 }
 
-void print_char()
+/*
+### uncomment this before you submit
+
+void output_result(const char* code_type)
 {
-	printf("[In print_char]Symbol:\'%s\'\n",yytext);charCount++;
+	printf("Line: %d, 1st char: %d, \"%s\" is a \"%s\".\n",lineCount+1, charCount+1, yytext, code_type);
+}
+*/
+
+void output_result(const char* code_type)
+{
+	printf("%s : \"%s\"\n",code_type, yytext);
 }

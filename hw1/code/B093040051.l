@@ -5,22 +5,33 @@ void print_char();
 
 %}
 
+
 reserved_words [aA][bB][sS][oO][lL][uU][tT][eE]|[aA][nN][dD]|[bB][eE][gG][iI][nN]|[bB][rR][eE][aA][kK]|[cC][aA][sS][eE]|[cC][oO][nN][sS][tT]|[cC][oO][nN][tT][iI][nN][uU][eE]|[dD][oO]|[eE][lL][sS][eE]|[eE][nN][dD]|[fF][oO][rR]|[fF][uU][nN][cC][tT][iI][oO][nN]|[iI][fF]|[mM][oO][dD]|[nN][iI][lL]|[nN][oO][tT]|[oO][bB][jJ][eE][cC][tT]|[oO][fF]|[oO][rR]|[pP][rR][oO][gG][rR][aA][mM]|[tT][hH][eE][nN]|[tT][oO]|[vV][aA][rR]|[wW][hH][iI][lL][eE]|[aA][rR][rR][aA][yY]|[iI][nN][tT][eE][gG][eE][rR]|[dD][oO][uU][bB][lL][eE]|[wW][rR][iI][tT][eE]|[wW][rR][iI][tT][eE][lL][nN]|[sS][tT][rR][iI][nN][gG]|[fF][lL][oO][aA][tT]|[rR][eE][aA][dD]
 identifiers [a-zA-Z_][a-zA-Z0-9_]{0,14}
 symbols [;:()\[\]+\-*/.=<>]
+real_num [+-]?([0-9]+\.[0-9]+)|([0-9]+(\.[0-9]*)?)([eE][+-]?[0-9]+)?
+quoted_string \'([^\']|\'\'){0,28}\'
+
 String 	[a-zA-Z]+
 space [ ]
 eol \n
 Symbol   .
 
+%x COMMENT
 %%
+"(*"                        { BEGIN(COMMENT); }
+<COMMENT>"*)"               { BEGIN(INITIAL); }
+<COMMENT>.|\n               { /* Ignore everything within comments */ }
+
 {reserved_words}    {printf("reserved_words : \'%s\'\n", yytext);}
 {identifiers}   {printf("identifiers : \'%s\'\n", yytext);}
-{String}	{charCount += yyleng; printf("String : \'%s\'\n", yytext);}
+{symbols}   {printf("symbols : \'%s\'\n", yytext);}
+{real_num}   {printf("real_num : \'%s\'\n", yytext);}
 
+{String}	{charCount += yyleng; printf("String : \'%s\'\n", yytext);}
 {space} {}
 {eol}   {lineCount++;}
-{Symbol} {print_char();}
+{Symbol} {}
 %%
 
 int main()

@@ -44,11 +44,11 @@ digit          [0-9]
 reserved_words {absolute}|{and}|{begin}|{break}|{case}|{const}|{continue}|{do}|{else}|{end}|{for}|{function}|{if}|{mod}|{nil}|{not}|{object}|{of}|{or}|{program}|{then}|{to}|{var}|{while}|{array}|{integer}|{double}|{write}|{writeln}|{string}|{float}|{read}
 identifiers [a-zA-Z_][a-zA-Z0-9_]{0,14}
 symbols :=|==|<=|>=|[\;\:\(\)\[\]\+\-\*\/\.\=\<\>]
-real_num [+-]?({digit}+(\.{digit}+)?)|({digit}+(\.{digit}+)?)([eE][+-]?{digit}+)
+real_num [+-]?({digit}+(\.{digit}+))|({digit}+(\.{digit}+)?)([eE][+-]?{digit}+)
 real_num_sym {real_num}[ ]*[+-]
 quoted_string \'([^\']|\'\'){0,28}\'
 
-invalid_identifiers [a-zA-Z{digit}#]+
+invalid_identifiers [a-zA-Z0-9#]+
 invalid_real_num [+-]?[0-9\.eE]+
 invalid_real_num_sym {invalid_real_num}[+-]
 

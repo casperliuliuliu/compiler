@@ -60,10 +60,10 @@ Other .
 
 %x COMMENT
 %%
-"(*"                        { BEGIN(COMMENT); }
-<COMMENT>"*)"               { BEGIN(INITIAL); }
-<COMMENT>\n                 { lineCount++; }
-<COMMENT>.                  { /* Ignore everything within comments except new lines */ }
+"(*"                        { BEGIN(COMMENT); charCount+=2; }
+<COMMENT>"*)"               { BEGIN(INITIAL); charCount+=2; }
+<COMMENT>\n                 { lineCount++; charCount = 1; }
+<COMMENT>.                  { charCount++; }
 "*)"						{ output_result("comment",1,1); }
 
 {reserved_words}    { output_result("reserved word",0,0); }
@@ -119,7 +119,7 @@ Other .
 {eol}               { lineCount++; charCount = 1; }
 {Other}             { 
 	if (yyleng > 1)
-		output_result("OOOOOO", 0, 1); 
+		output_result("Error", 1, 0); 
 }
 
 %%

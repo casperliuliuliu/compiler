@@ -1421,23 +1421,23 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 63 "B093040051.l"
-{ BEGIN(COMMENT); }
+{ BEGIN(COMMENT); charCount+=2; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 64 "B093040051.l"
-{ BEGIN(INITIAL); }
+{ BEGIN(INITIAL); charCount+=2; }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
 #line 65 "B093040051.l"
-{ lineCount++; }
+{ lineCount++; charCount = 1; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 66 "B093040051.l"
-{ /* Ignore everything within comments except new lines */ }
+{ charCount++; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
@@ -1547,7 +1547,7 @@ YY_RULE_SETUP
 #line 120 "B093040051.l"
 { 
 	if (yyleng > 1)
-		output_result("OOOOOO", 0, 1); 
+		output_result("Error", 1, 0); 
 }
 	YY_BREAK
 case 19:

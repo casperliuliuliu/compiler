@@ -48,11 +48,11 @@ real_num [+-]?({digit}+(\.{digit}+))|({digit}+(\.{digit}+)?)([eE][+-]?{digit}+)
 real_num_sym {real_num}[ ]*[+-]
 quoted_string \'([^\']|\'\'){0,28}\'
 
-invalid_identifiers [a-zA-Z0-9#]+
 invalid_real_num [+-]?[0-9\.eE]+
 invalid_real_num_sym {invalid_real_num}[+-]
+invalid_identifiers [a-zA-Z0-9#]+
 
-invalid_string [a-zA-Z{digit}\'\"]+
+invalid_string [a-zA-Z0-9\'\"]+
 
 space [ ]
 eol \n
@@ -91,7 +91,6 @@ Other .
 	charCount += strlen(symbolPart);
 }
 {quoted_string}					{ output_quote(); }
-{invalid_identifiers}            { output_result("ID",1,1); }
 {invalid_real_num}            { output_result("real number",1,1); }
 
 {invalid_real_num_sym}          {
@@ -113,8 +112,9 @@ Other .
     output_with_format("symbol", symbolPart);
 	charCount += strlen(symbolPart);
 }
+{invalid_identifiers}            { output_result("ID",1,1); }
 
-{invalid_string}            { output_result("string",1,1); }
+{invalid_string}            { output_result("quoted string",1,1); }
 {space}             { charCount += yyleng; }
 {eol}               { lineCount++; charCount = 1; }
 {Other}             { 

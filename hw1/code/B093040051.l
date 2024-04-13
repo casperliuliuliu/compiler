@@ -44,7 +44,7 @@ digit          [0-9]
 reserved_words {absolute}|{and}|{begin}|{break}|{case}|{const}|{continue}|{do}|{else}|{end}|{for}|{function}|{if}|{mod}|{nil}|{not}|{object}|{of}|{or}|{program}|{then}|{to}|{var}|{while}|{array}|{integer}|{double}|{write}|{writeln}|{string}|{float}|{read}
 identifiers [a-zA-Z_][a-zA-Z0-9_]{0,14}
 symbols :=|==|<=|>=|[\;\:\(\)\[\]\+\-\*\/\.\=\<\>]
-real_num [+-]?({digit}+(\.{digit}+))|({digit}+(\.{digit}+)?)([eE][+-]?{digit}+)
+real_num [+-]?([1-9][0-9]*|0)(\.[0-9][1-9]*)?([eE][+-]?([1-9][0-9]*|0))? 
 real_num_sym {real_num}[ ]*[+-]
 quoted_string \'([^\']|\'\'){0,28}\'
 
@@ -58,13 +58,16 @@ space [ ]
 eol \n
 Other .
 
-%x COMMENT
+%x COMMENT MULTILINE
 %%
-"(*"                        { BEGIN(COMMENT); charCount+=2; }
-<COMMENT>"*)"               { BEGIN(INITIAL); charCount+=2; }
-<COMMENT>\n                 { lineCount++; charCount = 1; }
-<COMMENT>.                  { charCount++; }
-"*)"						{ output_result("comment",1,1); }
+"(*"                        { BEGIN(MULTILINE); charCount += 2; }
+<MULTILINE>"*)"             { BEGIN(INITIAL); charCount += 2; }
+<MULTILINE>\n               { lineCount++; charCount = 1; }
+<MULTILINE>.                { charCount++; }  // Count every character within multiline comments
+
+"//"						{charCount += 2; BEGIN(COMMENT);}       // Start single-line comment
+<COMMENT>\n                 { BEGIN(INITIAL); lineCount++; charCount = 1; }  // End single-line comment on newline
+<COMMENT>.                  { charCount++; }  // Count every character in the single-line comment until newline
 
 {reserved_words}    { output_result("reserved word",0,0); }
 {identifiers}       { output_result("ID",1,0); }
@@ -90,6 +93,7 @@ Other .
     output_with_format("symbol", symbolPart);
 	charCount += strlen(symbolPart);
 }
+
 {quoted_string}					{ output_quote(); }
 {invalid_real_num}            { output_result("real number",1,1); }
 

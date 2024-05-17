@@ -62,7 +62,8 @@ extern int yydebug;
     RP = 263,                      /* RP  */
     NUMBER = 264,                  /* NUMBER  */
     NEWLINE = 265,                 /* NEWLINE  */
-    RESERVE = 266                  /* RESERVE  */
+    RESERVE = 266,                 /* RESERVE  */
+    IDENTIFIER = 267               /* IDENTIFIER  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -80,6 +81,7 @@ extern int yydebug;
 #define NUMBER 264
 #define NEWLINE 265
 #define RESERVE 266
+#define IDENTIFIER 267
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -91,7 +93,7 @@ union YYSTYPE
     int intVal;
     char* strVal;  // Assuming tokens like ID, SYMBOL might return strings
 
-#line 95 "y.tab.h"
+#line 97 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

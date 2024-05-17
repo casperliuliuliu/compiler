@@ -24,7 +24,7 @@
 %token PLUS MINUS MUL DIV
 %token LP RP
 %token NUMBER NEWLINE
-%token <strVal> RESERVE
+%token <strVal> RESERVE IDENTIFIER
 %%
 lines: /* empty (epsilon)*/ /*{printf("1\n");}*/
     | lines expression NEWLINE {
@@ -48,9 +48,9 @@ lines: /* empty (epsilon)*/ /*{printf("1\n");}*/
           memset(msg, 0, 256);
       }
     }
-    | lines reserved_statement lines { printf("Reserved keyword: %s\n", $2); free($2); }
-    | lines reserved_statement NEWLINE { printf("Reserved keyword: %s\n", $2); free($2); }
-    | lines reserved_statement { printf("Reserved keyword: %s\n", $2); free($2); }
+    | lines reserved_statement { printf("11\n"); }
+    | lines reserved_statement NEWLINE { printf("22\n"); }
+    | reserved_statement { printf("33\n"); }
     ;
 expression: expression PLUS {strcat(msg, " + ");} term {
         /* printf("3\n"); */
@@ -101,7 +101,9 @@ group: LP {strcat(msg, " ( ");} expression RP{
         $$ = $3;
     }
     ;
-reserved_statement: RESERVE { $$ = $1; }
+reserved_statement: 
+    reserved_statement RESERVE { printf("line %d: %s\n", lineNum ,$2); }
+    | RESERVE { printf("line %d: %s\n", lineNum ,$1);; }
     ;
 %%
 

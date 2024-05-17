@@ -36,15 +36,16 @@ writeln        [wW][rR][iI][tT][eE][lL][nN]
 string         [sS][tT][rR][iI][nN][gG]
 float          [fF][lL][oO][aA][tT]
 read           [rR][eE][aA][dD]
-digit          [0-9]
 
 reserved_words {absolute}|{and}|{begin}|{break}|{case}|{const}|{continue}|{do}|{else}|{end}|{for}|{function}|{if}|{mod}|{nil}|{not}|{object}|{of}|{or}|{program}|{then}|{to}|{var}|{while}|{array}|{integer}|{double}|{write}|{writeln}|{string}|{float}|{read}
+identifiers [a-zA-Z_][a-zA-Z0-9_]{0,14}
 %%
 {reserved_words} {
     //sscanf(yytext, "%s", &yylval.strVal); // floatVal is defined in "calc.y"
     yylval.strVal = strdup(yytext);
     return RESERVE;
 }
+{identifiers}       { yylval.strVal = strdup(yytext); return IDENTIFIER; }
 
 {Digit}	{
     sscanf(yytext, "%f", &yylval.floatVal); // floatVal is defined in "calc.y"

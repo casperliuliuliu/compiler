@@ -19,11 +19,12 @@
 
 %type <floatVal> NUMBER
 %type <floatVal> expression term factor group
+%type <strVal> reserved_statement
+
 %token PLUS MINUS MUL DIV
 %token LP RP
 %token NUMBER NEWLINE
 %token <strVal> RESERVE
-
 %%
 lines: /* empty (epsilon)*/ /*{printf("1\n");}*/
     | lines expression NEWLINE {
@@ -37,6 +38,19 @@ lines: /* empty (epsilon)*/ /*{printf("1\n");}*/
           memset(msg, 0, 256);
       }
     }
+    | lines expression {
+        if(flag == 1){
+            printf("line %d: %s\t (ans = %1f)\n", lineNum+1, msg, $2);
+            memset(msg, 0, 256);
+      }
+      else{
+          flag = 1;
+          memset(msg, 0, 256);
+      }
+    }
+    | lines reserved_statement lines { printf("Reserved keyword: %s\n", $2); free($2); }
+    | lines reserved_statement NEWLINE { printf("Reserved keyword: %s\n", $2); free($2); }
+    | lines reserved_statement { printf("Reserved keyword: %s\n", $2); free($2); }
     ;
 expression: expression PLUS {strcat(msg, " + ");} term {
         /* printf("3\n"); */
@@ -86,6 +100,8 @@ group: LP {strcat(msg, " ( ");} expression RP{
         strcat(msg, " ) ");
         $$ = $3;
     }
+    ;
+reserved_statement: RESERVE { $$ = $1; }
     ;
 %%
 

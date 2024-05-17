@@ -5,5 +5,5 @@ var
 begin
   i := 5;
   c := 'aa';
-  i = i+c;
+  i = i+c; //err integer + string
 end.

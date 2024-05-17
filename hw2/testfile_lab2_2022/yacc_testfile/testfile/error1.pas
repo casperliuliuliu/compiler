@@ -1,9 +1,9 @@
 program test;
 var
-  i: integer;
+  i: integer; //err i, j
 begin
-  i = 3;
-  j = 4;
+  i = 3; //err :=
+  j = 4; //err :=
   if (i > j) then
     Write('ok');
 end.

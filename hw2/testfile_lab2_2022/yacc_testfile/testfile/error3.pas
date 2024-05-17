@@ -1,6 +1,6 @@
 program test;
 var
-  i, j := integer;
+  i, j := integer; //err :
 begin
   i := 5;
-end
+end //err .

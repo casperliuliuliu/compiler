@@ -63,7 +63,16 @@ extern int yydebug;
     NUMBER = 264,                  /* NUMBER  */
     NEWLINE = 265,                 /* NEWLINE  */
     RESERVE = 266,                 /* RESERVE  */
-    IDENTIFIER = 267               /* IDENTIFIER  */
+    IDENTIFIER = 267,              /* IDENTIFIER  */
+    SYMBOL = 268,                  /* SYMBOL  */
+    PROGRAM = 269,                 /* PROGRAM  */
+    VAR = 270,                     /* VAR  */
+    BEGIM = 271,                   /* BEGIM  */
+    END = 272,                     /* END  */
+    ASSIGN = 273,                  /* ASSIGN  */
+    DECLARE = 274,                 /* DECLARE  */
+    SEMICOLON = 275,               /* SEMICOLON  */
+    DOT = 276                      /* DOT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -82,18 +91,27 @@ extern int yydebug;
 #define NEWLINE 265
 #define RESERVE 266
 #define IDENTIFIER 267
+#define SYMBOL 268
+#define PROGRAM 269
+#define VAR 270
+#define BEGIM 271
+#define END 272
+#define ASSIGN 273
+#define DECLARE 274
+#define SEMICOLON 275
+#define DOT 276
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "mod.y"
+#line 15 "mod.y"
 
     float floatVal;
     int intVal;
     char* strVal;  // Assuming tokens like ID, SYMBOL might return strings
 
-#line 97 "y.tab.h"
+#line 115 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
